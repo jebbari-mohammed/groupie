@@ -16,6 +16,11 @@ type ArtistBeta struct {
 }
 
 func ArtistsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		w.WriteHeader(405)
+		http.ServeFile(w, r, "eroors/405.html")
+		return
+	}
 	er, err, errr, errrr := fitchArtist(), fitchRelations(), fitchDates(), fitchLocation()
 	if er != nil || err != nil || errr != nil || errrr != nil {
 		w.WriteHeader(500)
@@ -30,16 +35,16 @@ func ArtistsHandler(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "eroors/404.html")
 		return
 	}
-	i := 1
+	var i bool
 	var selectedArtist Artist
 	for _, Artist := range Artists {
 		if idd == Artist.ID {
+			i = true
 			selectedArtist = Artist
 			break
 		}
-		i++
 	}
-	if i == 53 {
+	if !i {
 		w.WriteHeader(404)
 		http.ServeFile(w, r, "eroors/404.html")
 		return
