@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Artist.NAME}}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    
+    <div class="card">
+        <h1>Artist Name: {{.Artist.NAME}}</h1>
+        <img src="{{.Artist.IMAGE}}" style="width: 300px; height: 300px;">
+        <p><strong>Creation Date:</strong> {{.Artist.CREATIONDATES}}</p>
+        <p><strong>First Album:</strong> {{.Artist.FIRSTALBUM}}</p>
+        <p><strong>Members:</strong> {{range .Artist.MEMBERS}}{{.}}, {{end}}</p>
+        <h3>Tour Locations:</h3>
+        <ul>
+            {{range .Location}}
+            <li>{{.}}</li>
+            {{end}}
+        </ul>
+        <h3>Tour Dates:</h3>
+        <ul>
+            {{range .Date}}
+            <li>{{.}}</li>
+            {{end}}
+        </ul>
+        <h3>Relations (Locations and Dates):</h3>
+        <ul>
+            {{range $location, $dates := .Relation}}
+            <li><strong>{{ $location }}</strong>: {{ range $dates }}{{.}}, {{end}}</li>
+            {{end}}
+        </ul>
+        <br>
+        <p><a href="/">Back to Artists</a></p>
+    </div>
+</body>
+</html>
