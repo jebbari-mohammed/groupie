@@ -12,7 +12,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", groupietracker.HomeHandler)
 	http.HandleFunc("/artists", groupietracker.ArtistsHandler)
-	
+	http.HandleFunc("/search/", groupietracker.SearchHandler)
+
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println(err)
